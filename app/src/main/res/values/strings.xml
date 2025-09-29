@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MusicApp</string>
+    <string name="get_started">Get Stared</string>
+    <string name="title_activity_song_list">Song List</string>
+</resources>
