@@ -2,7 +2,7 @@
 
 MyMusic is a simple Android music player application built with **Kotlin** and **Jetpack Compose**.  
 It allows users to play local audio files, create playlists, and enjoy a minimal yet intuitive music experience.  
-
+screenshot.png
 ## ✨ Features
 - Play/pause and skip tracks  
 - Playlist management  
