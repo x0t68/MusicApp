@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/app"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/app"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MusicApp">
+
+        <activity
+            android:name="com.x2t68.MusicPlayer.presentation.PlayerActivity"
+            android:exported="false"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name="com.x2t68.MusicPlayer.presentation.MainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_song_list"
+            android:theme="@style/Theme.MusicApp" />
+
+        <activity
+            android:name="com.x2t68.MusicPlayer.presentation.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.x2t68.MusicPlayer.service.MusicService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService"/>
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>
