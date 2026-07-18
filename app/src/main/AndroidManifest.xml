@@ -22,13 +22,15 @@
         <activity
             android:name="com.x2t68.MusicPlayer.presentation.PlayerActivity"
             android:exported="false"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
 
         <activity
             android:name="com.x2t68.MusicPlayer.presentation.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_song_list"
-            android:theme="@style/Theme.MusicApp" />
+            android:theme="@style/Theme.MusicApp"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
 
         <activity
             android:name="com.x2t68.MusicPlayer.presentation.SplashActivity"

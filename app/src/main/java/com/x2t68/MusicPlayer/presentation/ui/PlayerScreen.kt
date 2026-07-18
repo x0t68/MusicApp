@@ -66,22 +66,18 @@ fun PlayerScreen(
     val currentSong = activeList.getOrNull(currentIndex)
 
     LaunchedEffect(Unit) {
-        viewModel.initWithContext(context)
+        viewModel.initWithContext(context, songList, initialIndex, isNewSelection)
     }
 
     LaunchedEffect(controller) {
         val ctrl = controller ?: return@LaunchedEffect
 
-        if (isNewSelection && songList.isNotEmpty()) {
-            viewModel.playNewList(songList, initialIndex)
-        } else {
-            currentIndex = ctrl.currentMediaItemIndex
-            isShuffle = ctrl.shuffleModeEnabled
-            repeatMode = ctrl.repeatMode
-            isPlaying = ctrl.isPlaying
-            duration = ctrl.duration.coerceAtLeast(0L)
-            elapsed = ctrl.currentPosition.coerceAtLeast(0L)
-        }
+        currentIndex = ctrl.currentMediaItemIndex
+        isShuffle = ctrl.shuffleModeEnabled
+        repeatMode = ctrl.repeatMode
+        isPlaying = ctrl.isPlaying
+        duration = ctrl.duration.coerceAtLeast(0L)
+        elapsed = ctrl.currentPosition.coerceAtLeast(0L)
     }
 
     DisposableEffect(controller) {

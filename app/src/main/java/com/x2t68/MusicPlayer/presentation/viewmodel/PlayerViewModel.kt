@@ -38,8 +38,15 @@ class PlayerViewModel(
     private val _currentQueue = MutableStateFlow<List<Song>>(emptyList())
     val currentQueue: StateFlow<List<Song>> = _currentQueue.asStateFlow()
 
-    fun initWithContext(context: Context) {
-        if (_controller.value != null) return
+    private var hasStartedPlaying = false
+
+    fun initWithContext(context: Context, songList: List<Song> = emptyList(), initialIndex: Int = 0, isNewSelection: Boolean = false) {
+        if (_controller.value != null) {
+            if (isNewSelection && !hasStartedPlaying && songList.isNotEmpty()) {
+                playNewList(songList, initialIndex)
+            }
+            return
+        }
         _currentQueue.value = repository.getCurrentQueue()
 
         val sessionToken = SessionToken(context, ComponentName(context, MusicService::class.java))
@@ -48,7 +55,9 @@ class PlayerViewModel(
             val ctrl = controllerFuture?.get()
             _controller.value = ctrl
             
-            if (_currentQueue.value.isEmpty() && ctrl != null) {
+            if (isNewSelection && !hasStartedPlaying && songList.isNotEmpty()) {
+                playNewList(songList, initialIndex)
+            } else if (_currentQueue.value.isEmpty() && ctrl != null) {
                 val list = mutableListOf<Song>()
                 for (i in 0 until ctrl.mediaItemCount) {
                     val item = ctrl.getMediaItemAt(i)
@@ -69,6 +78,7 @@ class PlayerViewModel(
     }
 
     fun playNewList(songs: List<Song>, startIndex: Int) {
+        hasStartedPlaying = true
         repository.setCurrentQueue(songs)
         _currentQueue.value = songs
         

@@ -11,12 +11,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -47,7 +47,7 @@ fun MainScreen(
 ) {
     val context = LocalContext.current
     val viewModel: MusicViewModel = viewModel(factory = ViewModelFactory(context))
-    
+
     val songs by viewModel.songs.collectAsState()
     val favorites by viewModel.favorites.collectAsState()
     val folders by viewModel.folders.collectAsState()
@@ -99,38 +99,38 @@ fun MainScreen(
 
             Column(Modifier.fillMaxSize()) {
                 Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 40.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                IconButton(
-                    onClick = { scope.launch { drawerState.open() } },
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 40.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Menu,
-                        contentDescription = "Menu",
-                        tint = Color.White
+                    IconButton(
+                        onClick = { scope.launch { drawerState.open() } },
+                        modifier = Modifier.padding(top = 8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Menu",
+                            tint = Color.White
+                        )
+                    }
+
+                    CustomSearchBar(
+                        query = searchQuery,
+                        onQueryChange = { viewModel.onSearchQueryChanged(it) },
+                        onSearch = {
+                            viewModel.performSearch(it)
+                            isSearchActive = false
+                        },
+                        active = isSearchActive,
+                        onActiveChange = { isSearchActive = it },
+                        suggestions = suggestions,
+                        modifier = Modifier
+                            .fillMaxWidth(0.85f)
+                            .heightIn(max = if (isSearchActive) 400.dp else 56.dp)
                     )
                 }
-
-                CustomSearchBar(
-                    query = searchQuery,
-                    onQueryChange = { viewModel.onSearchQueryChanged(it) },
-                    onSearch = { 
-                        viewModel.performSearch(it)
-                        isSearchActive = false 
-                    },
-                    active = isSearchActive,
-                    onActiveChange = { isSearchActive = it },
-                    suggestions = suggestions,
-                    modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .heightIn(max = if (isSearchActive) 400.dp else 56.dp)
-                )
-            }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -184,9 +184,9 @@ fun MainScreen(
                             modifier = Modifier
                                 .padding(20.dp)
                                 .align(Alignment.CenterHorizontally)
-                    ) {
-                        Text(text = "Grant Permission")
-                    }
+                        ) {
+                            Text(text = "Grant Permission")
+                        }
                     } else {
                         when (selectedTab) {
                             0 -> SongList(songs = songs, onSongClick = { pos -> onSongClick(songs, pos) }, modifier = Modifier.weight(1f))
@@ -231,7 +231,14 @@ fun FoldersList(folders: Map<String, List<Song>>, onFolderClick: (List<Song>) ->
             ListItem(
                 headlineContent = { Text(folderName, color = Color.White) },
                 supportingContent = { Text("${folders[folderName]?.size ?: 0} songs", color = Color.LightGray) },
-                leadingContent = { Icon(Icons.Default.Place, contentDescription = null, tint = Color.White) },
+                leadingContent = {
+                    Icon(
+                        painter = painterResource(R.drawable.folder),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(28.dp)
+                    )
+                },
                 modifier = Modifier.clickable { onFolderClick(folders[folderName] ?: emptyList()) },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
             )
@@ -247,7 +254,14 @@ fun AlbumsList(albums: Map<String, List<Song>>, onAlbumClick: (List<Song>) -> Un
             ListItem(
                 headlineContent = { Text(albumName, color = Color.White) },
                 supportingContent = { Text("${albums[albumName]?.size ?: 0} songs", color = Color.LightGray) },
-                leadingContent = { Icon(Icons.AutoMirrored.Filled.List, contentDescription = null, tint = Color.White) },
+                leadingContent = {
+                    Icon(
+                        painter = painterResource(R.drawable.vynil),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(28.dp)
+                    )
+                },
                 modifier = Modifier.clickable { onAlbumClick(albums[albumName] ?: emptyList()) },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
             )

@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.x2t68.MusicPlayer.R
 
 @Composable
 fun AboutDrawerContent(
@@ -41,7 +41,14 @@ fun AboutDrawerContent(
             label = { Text("Developed by Taha Munla Ali") },
             selected = false,
             onClick = { onItemClick() },
-            icon = { Icon(Icons.Default.Info, contentDescription = null) },
+            icon = { 
+                Icon(
+                    painter = painterResource(R.drawable.code), 
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(24.dp)
+                ) 
+            },
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
         )
         
@@ -55,7 +62,14 @@ fun AboutDrawerContent(
                 context.startActivity(intent)
                 onItemClick()
             },
-            icon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+            icon = { 
+                Icon(
+                    painter = painterResource(R.drawable.github), 
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(24.dp)
+                ) 
+            },
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
         )
         
@@ -69,7 +83,14 @@ fun AboutDrawerContent(
                 context.startActivity(intent)
                 onItemClick()
             },
-            icon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+            icon = { 
+                Icon(
+                    painter = painterResource(R.drawable.linkedin), 
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(24.dp)
+                ) 
+            },
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
         )
     }
