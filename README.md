@@ -2,7 +2,7 @@
 
 A modern, high-performance local music player built for Android using the latest development practices. This app provides a seamless and immersive audio experience with a focus on speed, design, and usability.
 
-![App Screenshot](Screenshot.png)
+![App Screenshot](photo_1_2026-07-19_18-52-37)
 
 ## ✨ Features
 
